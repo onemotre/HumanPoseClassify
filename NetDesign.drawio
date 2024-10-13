@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:131.0) Gecko/20100101 Firefox/131.0" version="24.7.17">
   <diagram name="Page-1" id="c7488fd3-1785-93aa-aadb-54a6760d102a">
-    <mxGraphModel dx="1680" dy="961" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+    <mxGraphModel dx="1680" dy="1009" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -334,7 +334,7 @@
         <mxCell id="Uf4B5pqepyAERbNtg7XQ-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.038;entryY=0.857;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="Uf4B5pqepyAERbNtg7XQ-5" source="Uf4B5pqepyAERbNtg7XQ-11" target="Uf4B5pqepyAERbNtg7XQ-12">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Uf4B5pqepyAERbNtg7XQ-137" value="DropOut" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="Uf4B5pqepyAERbNtg7XQ-5">
+        <mxCell id="Uf4B5pqepyAERbNtg7XQ-137" value="&lt;div&gt;DropOut Pooling&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="Uf4B5pqepyAERbNtg7XQ-5">
           <mxGeometry x="150" y="35" width="50" height="240" as="geometry" />
         </mxCell>
         <mxCell id="Uf4B5pqepyAERbNtg7XQ-18" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="2b4e8129b02d487f-4" source="Uf4B5pqepyAERbNtg7XQ-23" target="Uf4B5pqepyAERbNtg7XQ-6">
@@ -421,7 +421,7 @@
         <mxCell id="Uf4B5pqepyAERbNtg7XQ-159" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.038;entryY=0.857;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="Uf4B5pqepyAERbNtg7XQ-150" source="Uf4B5pqepyAERbNtg7XQ-154" target="Uf4B5pqepyAERbNtg7XQ-156">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Uf4B5pqepyAERbNtg7XQ-160" value="DropOut" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="Uf4B5pqepyAERbNtg7XQ-150">
+        <mxCell id="Uf4B5pqepyAERbNtg7XQ-160" value="DropOut Pooling" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="Uf4B5pqepyAERbNtg7XQ-150">
           <mxGeometry x="160" y="35" width="50" height="240" as="geometry" />
         </mxCell>
         <mxCell id="Uf4B5pqepyAERbNtg7XQ-161" value="" style="endArrow=classic;html=1;rounded=0;exitX=1.01;exitY=0.101;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="2b4e8129b02d487f-4" source="Uf4B5pqepyAERbNtg7XQ-137" target="Uf4B5pqepyAERbNtg7XQ-151">
@@ -524,9 +524,14 @@
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1000" y="415" />
-              <mxPoint x="1000" y="600" />
-              <mxPoint x="80" y="600" />
+              <mxPoint x="1000" y="590" />
+              <mxPoint x="80" y="590" />
             </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Uf4B5pqepyAERbNtg7XQ-194" value="Normalize and Augment the Coordinates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="Uf4B5pqepyAERbNtg7XQ-184">
+          <mxGeometry x="0.2499" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
       </root>
