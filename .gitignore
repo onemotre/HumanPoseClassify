@@ -1,3 +1,5 @@
 assets/*
 model/*
 data/*
+todo.md
+./processor/test.py
