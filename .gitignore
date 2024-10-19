@@ -3,4 +3,4 @@ model/*
 data/*
 todo.md
 ./processor/test.py
-./processor/__pycache__
+processor/__pycache__/*
