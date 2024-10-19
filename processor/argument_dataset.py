@@ -4,14 +4,14 @@ import scipy
 import scipy.ndimage
 from tqdm import tqdm
 
-# 设置当前工作目录为项目根目录
 os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/..")
 video_path = os.path.join(os.getcwd(), "assets", "videos", "video1.mp4")
 
 # argument param
+extend_type = ["brighter", "jitter", "blur"]
 brightness = 60
-rgb_gaussian_sigma = 20
-gaussian_blur = 11
+rgb_gaussian_sigma = 2
+gaussian_blur = 5
 
 
 def extended_data(ori_pic):
