@@ -11,7 +11,7 @@ from ultralytics import YOLO
 
 import dataIO
 import argument_dataset
-import EKF
+import KF 
 
 # basic settings
 os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/..")
@@ -21,36 +21,26 @@ detect_model = YOLO('yolo11x-pose')
 pretrained_model = YOLO("yolo11m-pose.pt")
 
 # Kalman Filter
-Q = torch.eye(4) * 0.2
-R = torch.eye(2) * 0.01
+F = np.array([[1, 0, 1, 0], [0, 1, 0, 1], [0, 0, 1, 0], [0, 0, 0, 1]])
+H = np.array([[1, 0, 0, 0], [0, 1, 0, 0]])
+Q = np.eye(4) * 0.01
+R = np.eye(2) * 0.01
 
-pointKF = []
+pointKF = {}
 
-def f(x, dt):
-    '''
-    @param x: state vector (x, y, vx, vy)
-    @param dt: time interval
-    '''
-    return torch.tensor([
-        x[0] + x[2] * dt,
-        x[1] + x[3] * dt,
-        x[2],
-        x[3]
-    ])
-
-def h(x):
-    return torch.tensor([
-        x[0],
-        x[1]
-    ])
-
-def kalman_filter(idx, x, y, dt):
-    if idx >= len(pointKF):
-        # init new EKF
-        ekf = EKF.EKF(x, y, f, h, Q, R)
-        
-
-    
+def kalman_filter(idx, x0, y0):
+    if idx not in pointKF.keys():
+        pointKF[idx] = KF.KF2D (
+            x0 = np.array([x0, y0, 0, 0]),
+            P0 = np.eye(4) * 0.01,
+            F = F,
+            H = H,
+            Q = Q,
+            R = R
+        )
+    pointKF[idx].predict()
+    pointKF[idx].update(np.array([x0, y0]))
+    return pointKF[idx].get_state()
 
 def get_video_keypoints_data(video_path):
   '''
@@ -98,10 +88,13 @@ def get_video_keypoints_data(video_path):
                     for kp_idx, (kp, kp_xyn) in enumerate(zip(person_keypoints, person_keypoints_xyn)):
                         x, y, conf = kp
                         xn, yn = kp_xyn
+                        x, y, vx, vy = kalman_filter(kp_idx, x, y)
                         person_data["points"].append({
                             "class": kp_idx,
                             "x": float(x),
                             "y": float(y),
+                            "vx": float(vx),
+                            "vy": float(vy),
                             "xn": float(xn),
                             "yn": float(yn),
                             "confidence": float(conf)})

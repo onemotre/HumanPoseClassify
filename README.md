@@ -87,7 +87,7 @@ $$
 \mathcal{L}(\theta) = Loss(\theta) + \lambda_1\Sigma \theta_i + \lambda_2\Sigma\theta_i^2
 $$
 
-## Dropout
+### Dropout
 
   Add Dropout layer after each hidden layer to calculate each inner layer while injecting noise and drop out some neurons during training. By this method, the generalization ability and robustness of the model is improved.
 
