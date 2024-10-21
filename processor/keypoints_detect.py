@@ -9,9 +9,9 @@ from tqdm import tqdm
 from ultralytics import YOLO
 
 
-import dataIO
-import argument_dataset
-import KF 
+from processor.dataIO import *
+from processor.argument_dataset import *
+from processor.KF import KF2D as KF
 
 # basic settings
 os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/..")
@@ -30,7 +30,7 @@ pointKF = {}
 
 def kalman_filter(idx, x0, y0):
     if idx not in pointKF.keys():
-        pointKF[idx] = KF.KF2D (
+        pointKF[idx] = KF (
             x0 = np.array([x0, y0, 0, 0]),
             P0 = np.eye(4) * 0.01,
             F = F,
@@ -48,7 +48,7 @@ def get_video_keypoints_data(video_path):
   @param video_path: get keypoint labeled by YOLOv11 pre-trained model
   @return the directory of the origin picture
   '''
-  dataIO.create_keypoint_label_data_dir(video_path=video_path)
+  create_keypoint_label_data_dir(video_path=video_path)
   
   # opencv2
   video = cv2.VideoCapture(video_path)
@@ -112,19 +112,19 @@ def get_video_keypoints_data(video_path):
 
         cv2.imwrite(
             os.path.join(
-                dataIO.get_origin_pic_dir(video_path=video_path),
+                get_origin_pic_dir(video_path=video_path),
                 f"{frame_count}.jpg"), 
             frame)
         file_name = os.path.join(
-            dataIO.get_origin_pic_dir(video_path=video_path),
+            get_origin_pic_dir(video_path=video_path),
             f"{frame_count}.yaml"
         )
         with open(file_name, 'w') as yaml_file:
             yaml.dump(frame_data, yaml_file, default_flow_style=False)
 
         # extend data
-        dir_name = dataIO.get_extend_pic_dir(video_path=video_path)
-        pics = argument_dataset.extended_data(frame)
+        dir_name = get_extend_pic_dir(video_path=video_path)
+        pics = extended_data(frame)
         for key in pics.keys():
             cv2.imwrite(os.path.join(dir_name, f"{frame_count}_{key}.jpg"), pics[key])
         
@@ -137,7 +137,7 @@ def get_video_keypoints_data(video_path):
         pbar.update(1)
     pbar.close()
     video.release()
-    return os.path.dirname(dataIO.get_origin_pic_dir(video_path=video_path))
+    return os.path.dirname(get_origin_pic_dir(video_path=video_path))
 
 
 def train_keypoint_modle(data_set, epochs=10, img_size=640):
@@ -151,8 +151,8 @@ def train_keypoint_modle(data_set, epochs=10, img_size=640):
         project_name="human-pose-classify",
         workspace="onemotre"
     )
-
-    kfolds = dataIO.split_yolo_train_val(data_set, K=0)
+    K = 0
+    kfolds = dataIO.split_yolo_train_val(data_set, K=K)
     fold_results = []
     with tqdm(total=len(kfolds), desc="Training K-Folds", position=0, leave=True) as pbar:
         for fold, kfold in enumerate(kfolds):
@@ -196,9 +196,3 @@ def train_keypoint_modle(data_set, epochs=10, img_size=640):
     # Save mean results
     with open(os.path.join(data_set, "mean_results.txt"), 'w') as f:
         f.write(f"Mean validation results across {K} folds: {mean_results}")
-
-
-if __name__ == "__main__":
-    data_dir = get_video_keypoints_data(f"/home/tdt/Documents/project/HumanPoseClassify/assets/videos/lxy/lxy.mp4")
-    # dataIO.format2yolo(data_dir)
-    # train_keypoint_modle("/home/tdt/Documents/project/HumanPoseClassify/data/pic_keypoints_label/video1")
